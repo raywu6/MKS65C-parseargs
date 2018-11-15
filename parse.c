@@ -1,19 +1,17 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
+#include <stdlib.h>
 
 char ** parse_args( char * line ) {
-  char* retPtrs[];
-  char *ptr = malloc(100 * sizeof(char *));
-  
-  char *command = line;
-  char *programName = strsep( &command, " " );
-  char *arguments = command;
 
-  printf("%s\n", programName);
-  printf("%s\n", arguments);
+  char **ptr = malloc(8 * sizeof(char *));
+  //allocating memory for the array of strings
 
-  return 0;
+  int ctr = 0; //the place in the array of string pointers
+  while (ptr[ctr++] = strsep(&line, " ")); //iterate through each split string and add a pointer to it to that index of ptr
+
+  return ptr;
 }
 
 int main() {
@@ -25,10 +23,13 @@ int main() {
   /* printf("%s\n", s1); */
 
   char line[100] = "ls -l --all --color";
-  char ** args = parse_args(line);
-  printf("%s", args[0]);
-  printf("%s", args);
-  execvp(args[0], args);
+  char line2[128] = "ls -l -a";
+  char ** args = parse_args(line); //splitting into ls, -l, --all, --color
+  //printf("%s\n", args[0]); //printing each argument 
+  //printf("%s\n", args[1]);
+  //printf("%s\n", args[2]);
+  //printf("%p\n", args);
+  execvp(args[0], args); //executing ls
   
   
   return 0;
